@@ -10,7 +10,7 @@ export class ContactList extends Component {
           {contacts.map(({ id, name, number }) => (
             <Item key={id}>
               {`${name}: ${number}`}{' '}
-              <Button type="submit" onClick={() => deleteContact(id)}>
+              <Button key={id} type="submit" onClick={() => deleteContact(id)}>
                 Delete
               </Button>
             </Item>

@@ -17,17 +17,18 @@ export class App extends Component {
     filter: '',
   };
 
-  nameInputId = nanoid();
+ 
 
   handleSubmit = ({ id, name, number }) => {
     const { contacts } = this.state;
-    const contact = { id: this.nameInputId, name, number };
 
     const doubleContact = contacts.find(contact => contact.name === name);
     if (doubleContact) {
       alert(`You have already added ${name} to Contact list!!!`);
       return;
     }
+
+  const contact = { id:  nanoid(), name, number };
     this.setState(prevState => ({
       contacts: [...prevState.contacts, contact],
     }));
@@ -40,7 +41,7 @@ export class App extends Component {
   };
 
   handleFilter = evt => {
-    this.setState({ filter: evt.currentTarget.value.toLowerCase() });
+    this.setState({ filter: evt.currentTarget.value });
   };
 
   getVisibleContacts() {
@@ -58,13 +59,12 @@ export class App extends Component {
     const parseContacts = JSON.parse(contacts);
 
     if (parseContacts) {
-      console.log('object')
       this.setState({ contacts: parseContacts });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.contacts !== this.state.contacts) {
+    if (prevState.contacts !== this.state.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }
   }
