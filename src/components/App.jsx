@@ -21,15 +21,15 @@ export class App extends Component {
 
   handleSubmit = ({ id, name, number }) => {
     const { contacts } = this.state;
-    const contact = { id: this.nameInputId, name, number };
     const doubleContact = contacts.find(contact => contact.name === name);
     if (doubleContact) {
+      alert(`You have already added ${name} to Contact list!!!`);
       return;
-    } else {
-      this.setState(prevState => ({
-        contacts: [...prevState.contacts, contact],
-      }));
     }
+    const contact = { id: this.nameInputId, name, number };
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, contact],
+    }));
   };
 
   deleteContact = id => {
