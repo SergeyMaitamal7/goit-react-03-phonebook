@@ -71,10 +71,12 @@ export class App extends Component {
         </Section>
         <Section title={'Contacts'}>
           <Filter value={filter} onChange={this.handleFilter} />
-          <ContactList
-            contacts={visibleContacts}
-            deleteContact={this.deleteContact}
-          />{' '}
+          {visibleContacts && (
+            <ContactList
+              contacts={visibleContacts}
+              deleteContact={this.deleteContact}
+            />
+          )}
         </Section>
       </Container>
     );
