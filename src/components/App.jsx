@@ -5,7 +5,6 @@ import { Filter } from './Filter/Filter';
 import { FormContacts } from './Form/Form';
 import { ContactList } from './ContactList/ContactList';
 import { Section } from './Section/Section';
-import { logDOM } from '@testing-library/react';
 
 export class App extends Component {
   state = {
