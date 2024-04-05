@@ -8,7 +8,12 @@ import { Section } from './Section/Section';
 
 export class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
     filter: '',
   };
 
@@ -16,12 +21,13 @@ export class App extends Component {
 
   handleSubmit = ({ id, name, number }) => {
     const { contacts } = this.state;
+    const contact = { id: this.nameInputId, name, number };
+
     const doubleContact = contacts.find(contact => contact.name === name);
     if (doubleContact) {
       alert(`You have already added ${name} to Contact list!!!`);
       return;
     }
-    const contact = { id: this.nameInputId, name, number };
     this.setState(prevState => ({
       contacts: [...prevState.contacts, contact],
     }));
@@ -39,19 +45,22 @@ export class App extends Component {
 
   getVisibleContacts() {
     const { contacts, filter } = this.state;
+
     const normilizedFilter = filter.toLocaleLowerCase();
-    if (contacts) {
-      const visibleContacts = contacts.filter(contact =>
-        contact.name.toLowerCase().includes(normilizedFilter)
-      );
-      return visibleContacts;
-    }
+    const visibleContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normilizedFilter)
+    );
+    return visibleContacts;
   }
 
   componentDidMount() {
     const contacts = localStorage.getItem('contacts');
     const parseContacts = JSON.parse(contacts);
-    this.setState({ contacts: parseContacts });
+
+    if (parseContacts) {
+      console.log('object')
+      this.setState({ contacts: parseContacts });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -63,7 +72,7 @@ export class App extends Component {
   render() {
     const { filter } = this.state;
     const visibleContacts = this.getVisibleContacts();
-    console.log(visibleContacts);
+
     return (
       <Container>
         <Section title={'Phonebook'}>
@@ -71,12 +80,10 @@ export class App extends Component {
         </Section>
         <Section title={'Contacts'}>
           <Filter value={filter} onChange={this.handleFilter} />
-          {visibleContacts.length > 0 && (
-            <ContactList
-              contacts={visibleContacts}
-              deleteContact={this.deleteContact}
-            />
-          )}
+          <ContactList
+            contacts={visibleContacts}
+            deleteContact={this.deleteContact}
+          />
         </Section>
       </Container>
     );
