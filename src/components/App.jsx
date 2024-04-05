@@ -40,10 +40,12 @@ export class App extends Component {
   getVisibleContacts() {
     const { contacts, filter } = this.state;
     const normilizedFilter = filter.toLocaleLowerCase();
-    const visibleContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normilizedFilter)
-    );
-    return visibleContacts;
+    if (contacts) {
+      const visibleContacts = contacts.filter(contact =>
+        contact.name.toLowerCase().includes(normilizedFilter)
+      );
+      return visibleContacts;
+    }
   }
 
   componentDidMount() {
